@@ -68,8 +68,15 @@
      -  Time: Queries caues a delay or responses depends on time, where the attacker can notice. 
         -  it relies on pausing the application for certain amount of time, then returning the results, indicating that the app is vulnerable to SQLi. 
         -  and we can do the same example of admin password in boolean, because we can check if the title take this amount of time to return the title, then it is true, otherwise is false.
-3. Out-of-Band
+3. Out-of-Band Application security testing (OAST):
+   -  it is also called (OAST), it is the type of SQLi where the attacker does not recieve query result in HTTP response, but instead, forces the database serverto make an external network interaction (DNS, HTTP, SMB, etc.) that the attacker can observer. 
+   -  It works only if the database can initiate outbound connections. 
    - The attacker here is un-able to use the same channel to launch the attack and also get the results, so it depends on the application ability to make a network connection for dns or http request to deliever the data to the attacker.
+   - How it works:
+     - We inject a payload into a SQL query. 
+     - The payload forces the DB to call an external server
+     - We monitor that server
+     - If we saw a request on this server, then we confirm the SQLi. 
    - This is not common
    - Usually used if we don't have the previous two. 
    - It relies on DB features.
@@ -85,15 +92,15 @@
 
 ### Black box methodology:
 1. Map the application:  -> This is very important step before start throwing payloads. 
-  - Visit the application that you are targeting
-  - walk through all the pages that are accessible to you within the user context.
-  - make note of all the input vectors that potentially talks to the backend. 
-  - understand how the application work. 
-  - try to figure out the logic of the application
-  - try to figure out sub-domains of the application
-  - enumerate directories that may be hidden. 
-  - have the proxy in the background intercepting all requests that you are making to the application
-  - Understand how the application work.
+     - Visit the application that you are targeting
+     - walk through all the pages that are accessible to you within the user context.
+     - make note of all the input vectors that potentially talks to the backend. 
+     - understand how the application work. 
+     - try to figure out the logic of the application
+     - try to figure out sub-domains of the application
+     - enumerate directories that may be hidden. 
+     - have the proxy in the background intercepting all requests that you are making to the application
+     - Understand how the application work.
 2. Fuzz the application (Adding special chars in the input vectors and see if the app responds in strange way).
    - Fuzz with SQL-specific characters such as ' or " and look for errors or other anomalies. 
    - depending on the output of the application, start refining your query until you reach the correct payload. 
@@ -103,9 +110,9 @@
 
 ### White box methodology:
 1. Enable web server logging
-  - This helps because when you perform fuzzing, it will generate errors on all different invalid characters
+    - This helps because when you perform fuzzing, it will generate errors on all different invalid characters
 2. Enable database logging
-  - because when you perform fuzzing, you can see what characters made it thorugh the payload and which not 
+    - because when you perform fuzzing, you can see what characters made it thorugh the payload and which not 
 3. Map the application
    - visible functionality
    - regex search to all instances in the code that talk to the database
@@ -116,37 +123,37 @@
 ## How to exploit SQLi  
 - It depends on the SQLi vulnerability that we are trying to exploit.
 1. The first type and most common is **Error-based SQLi**
-  - Submit SQL-specific characters such as ' or " and look for errors
-  - Different characters give different errors
-  - so successful exploit in this type is to get the application to output an SQL error.
+    - Submit SQL-specific characters such as ' or " and look for errors
+    - Different characters give different errors
+    - so successful exploit in this type is to get the application to output an SQL error.
 
 2. Exploiting Union based SQLi
-  - There are two main rules for combining the result sets of two queries by using Union
-    1. The number and the order of the columns must be the same in all queries. 
-    2. The data types must be compatible. 
-  - Exploitation:
-    1. Figure out the number of columns that the query is making
-      - Usually we use ORDER BY clause:
-        - > example: select title, cost from product where id = 1 order by 1--
-        - > example: select title, cost from product where id = 1 order by 2--
-        - > example: select title, cost from product where id = 1 order by 3-- => cause error
-          - so here it will return the data ordered by the first column.
-          - so our idea will be to keep incrementing order by, until we hit error, then we will know that the number of columns is the error idx - 1
-        - Another way to do so, is to use NULL VALUES
-          - > example: select title, cost from product where id = 1 UNION SELECT NULL-- => error
-          - > example: select title, cost from product where id = 1 UNION SELECT NULL, NULL-- => no error
-          - > example: select title, cost from product where id = 1 UNION SELECT NULL, NULL, NULL-- => error
-            - So, the main idea here is that if you do not use the same number of NULL as the columns, you will get error, so you keep incrementing the NULLs until you do not see error.
-          - the payload will be in this format **' UNION SELECT NULL**
-          - the error will be in form of: 
-            - All queries combined using UNION operator must have an equal number of expressions in their target lists.
-    2. Figure out the datatypes of the columns (mainly interested in string data). 
-       - probes each column to test whether it can hold string data by submitting a series of UNION SELECT payloads that place a string value into each column in turn. 
-         - > example: ' UNION SELECT 'a', NULLL--
-         - so here we try to check if the first column can contain strings, if not, we will see an error saying: Conversion failed when converting from varchar value 'a' to datatype int
-         - this means that first column type is int not string. 
-    3. use the Union operator to output information from the database. 
-      - use the previous information to try to extract information from the DB. 
+     - There are two main rules for combining the result sets of two queries by using Union
+       1. The number and the order of the columns must be the same in all queries. 
+       2. The data types must be compatible. 
+     - Exploitation:
+        1. Figure out the number of columns that the query is making
+           - Usually we use ORDER BY clause:
+             - > example: select title, cost from product where id = 1 order by 1--
+             - > example: select title, cost from product where id = 1 order by 2--
+             - > example: select title, cost from product where id = 1 order by 3-- => cause error
+               - so here it will return the data ordered by the first column.
+               - so our idea will be to keep incrementing order by, until we hit error, then we will know that the number of columns is the error idx - 1
+             - Another way to do so, is to use NULL VALUES
+               - > example: select title, cost from product where id = 1 UNION SELECT NULL-- => error
+               - > example: select title, cost from product where id = 1 UNION SELECT NULL, NULL-- => no error
+               - > example: select title, cost from product where id = 1 UNION SELECT NULL, NULL, NULL-- => error
+                 - So, the main idea here is that if you do not use the same number of NULL as the columns, you will get error, so you keep incrementing the NULLs until you do not see error.
+               - the payload will be in this format **' UNION SELECT NULL**
+               - the error will be in form of: 
+                 - All queries combined using UNION operator must have an equal number of expressions in their target lists.
+        2. Figure out the datatypes of the columns (mainly interested in string data  ). 
+            - probes each column to test whether it can hold string data by submitting a series of UNION SELECT payloads that place a string value into each column in tur n. 
+              - > example: ' UNION SELECT 'a', NULLL--
+              - so here we try to check if the first column can contain strings, if not, we will see an error saying: Conversion failed when converting from varchar value 'a' to datatype int
+              - this means that first column type is int not string. 
+        3. use the Union operator to output information from the database. 
+           - use the previous information to try to extract information from the DB. 
 3. Exploiting Boolean-based Blind SQLi
    - Submit boolean condition that evaluate to false and note the response. 
    - Submit boolean condition that evaluate to true and note the response. 
