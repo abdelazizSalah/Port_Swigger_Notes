@@ -1,0 +1,18 @@
+# Lab - SQL injection UNION attack, finding a column containing text
+- This lab continue on the [previous lab](../Lab3-Determining_Number_of_columns/writeup.md)
+- Now the goal is to determine which column has datatype string. 
+- The lab will give you random string, and your goal is to match it. 
+- It is '1lFmCn' in my case
+  - ![RandomString](RandomString.png)
+- Since we know that number of columns = 3
+- The idea is to use Union statement until we can match which column has strings:
+  - ' Union Select 'a', Null, Null--
+    - ![First_column_caused_error](First_column_caused_error.png)
+  - ' Union Select  Null,'a', Null--
+    - ![Second_Column_did_not_cause_error](Second_Column_did_not_cause_error.png)
+  - ' Union Select  Null, Null,'a'--
+    - ![Third_Column_Caused_error](Third_Column_Caused_error.png)
+- and see which of them will not cause error
+- So we can now know that second column is the one which we can search for the string at. 
+  - ' Union Select  Null,'1lFmCn', Null--
+  - ![Solving_The_Lab](Solving_The_Lab.png)
