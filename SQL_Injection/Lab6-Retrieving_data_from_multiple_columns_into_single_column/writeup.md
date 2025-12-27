@@ -1,0 +1,1 @@
+# Lab: SQL injection UNION attack, retrieving multiple values in a single column
