@@ -66,6 +66,19 @@
    - <@xmlencode>' OR 1=1--</@xmlencode>
 
 ## Lab solution 
-- From the name of the lab, it is required to use the xml encoding to bypass the WAF filter
-  - <@xmlencode> PAYLOAD </@xmlencode>
-- It is also required to find the SQLi vulnerability in the stock check feature
+1. It says that the vulnerability is at the stocks query, so we need to look where does this stock exist
+   - ![Stocks_endpoint](Stocks_endpoint.png)
+2. It says that it returns the response in the same channel, so we can use error based method to get our goal
+3. The main goal is to retrieve the admin credentials.
+4. First we need to determine the number of columns: 
+   1. Union Select null --
+   2.  ![Attack_Detected](Attack_Detected.png)
+   3.  But the server is using WAF, so we need to use Hackvertor to be able to bypass it
+       1.  ![Select_Encoding_via_Hackvertor](Select_Encoding_via_Hackvertor.png)
+       2.  ![Getting_Hackvertor_response](Getting_Hackvertor_response.png)
+   4.  Using select null, we detected that number of columns is 1.
+5.  now we must use concatination to be able to retrieve usernames and passwords in the same column
+    1.   Union select username || password from users
+    2.   ![Getting_all_credentials](Getting_all_credentials.png)
+    3.   Now we can use the admin credentials to login
+         1.   ![Lab_Solved](Lab_Solved.png)
