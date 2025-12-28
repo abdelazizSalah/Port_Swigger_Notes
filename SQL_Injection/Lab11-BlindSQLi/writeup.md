@@ -58,5 +58,5 @@
          3. then we define the values for the characters to be the alphanumeric characters with type bruteforcer with min and max length = 1. 
       7. Then after you get the results, order them by index, and filter on responses with keyword "Welcome"
          1. ![Filter_with_welcome](Filter_with_welcome.png) 
-9. Since I do not have access to professional burpsuite, so I managed to write multi-threading code to retrieve the admin password: 
+9. Since I do not have access to professional burpsuite, so I managed to write [multi-threading code](./multi_threading_code.py) to retrieve the admin password: 
    - ![LabSolved](LabSolved.png)
