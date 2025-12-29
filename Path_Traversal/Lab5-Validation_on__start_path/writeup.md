@@ -1,0 +1,2 @@
+- we must keep the path written, and append the ../ at the end
+  - ![Lab_Solved](Lab_Solved.png)
