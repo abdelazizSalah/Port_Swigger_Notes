@@ -1,0 +1,3 @@
+- In this lab the input is stripped non-recursively, so we need to use this payload
+  - ....//....//....//etc/passwd
+    - ![LabSolved](LabSolved.png)
