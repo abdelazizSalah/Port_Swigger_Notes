@@ -1,0 +1,2 @@
+- Since it requires the file to have certain extension we can use the null byte to trick the system
+  - ![Lab_Solved](Lab_Solved.png)
