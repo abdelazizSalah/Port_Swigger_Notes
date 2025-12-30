@@ -23,5 +23,12 @@
   - > & ping -c 10 127.0.0.1 &
   - This will cause 10 seconds delay in the response. 
 
+### 2. Causing output redirection
+- We can also redirect the output from the injected command into a file within the web root that we can read, then retrieve it using the browser. 
+- For example if there is a static resources from the filesystem location: /var/www/static, then we can submit the following payload: 
+  - > & whoami > /var/www/static/flag.txt
+- then we try to access it from the browser: 
+  - > www.website.com//var/www/static/flag.txt
+
 ## Common payload:
 ![CommonPayloads](CommonPayloads.png)
