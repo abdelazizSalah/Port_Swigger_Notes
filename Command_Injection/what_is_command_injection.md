@@ -13,5 +13,15 @@
 - This & will force to excute the commands one after another, resulting in excuting the echo and prining it in the http response. 
 - 
 
+## Blind OS command injection vulnerabilities
+- Usually this kind of vulnerabilities are blind. 
+- This mean that the application does not return the output from the command within its HTTP response. 
+- but we can still exploit them. 
+
+### 1. Time delay
+- First method is to perform time delay using ping:
+  - > & ping -c 10 127.0.0.1 &
+  - This will cause 10 seconds delay in the response. 
+
 ## Common payload:
 ![CommonPayloads](CommonPayloads.png)
