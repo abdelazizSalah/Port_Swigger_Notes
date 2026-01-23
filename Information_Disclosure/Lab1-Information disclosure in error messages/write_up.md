@@ -1,0 +1,5 @@
+- All we need to do here is to send a malformed input to the server to be able to get the error message. 
+- On checking the web page, we can see that there is no much parameters except the session cookie, and the id parameter. 
+- so I sent **a** which is character insted of 1 as id, and I got the version:
+  - 2 2.3.31
+  - ![Lab_Solved](Lab_Solved.png)

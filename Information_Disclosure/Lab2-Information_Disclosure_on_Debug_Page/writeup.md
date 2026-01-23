@@ -1,0 +1,9 @@
+- All we need to do, is to open the console, and look at the HTML, and look for all divs, and we will find this comment: 
+  - <a /cgi-bin/phpinfo.php> Debug </ a>
+- which indicates that this is the debug page, go to it
+- ![Debug_Page](Debug_Page.png)
+- we can search for SECRET_KEY
+  - ![Secret_Key_Value](Secret_Key_Value.png)
+  - zo2r5i5c8ejcqk15vp4htq5anws8hd61
+- on submitting it, we get the banner: 
+  - ![Lab_Solved](Lab_Solved.png) 
