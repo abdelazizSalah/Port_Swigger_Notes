@@ -86,6 +86,10 @@
      - They may be logged in separate files, if the attacker was able to access them, it can be useful reference for understanding the application runtime state.
      - It may also give several clues as to how they can supply crafted input to manipulate the application state and control the information received. 
   6. User account pages
+     - By nature, the used account page usually contains sensitive information, such as the users' email and phone number. 
+     - Users should only have access to their own account page, but if there is a logic flaw, then attacker may be able to access others pages
+       - > Get /user/personal_info?user=u1
+     - if attacker changed it to u2, then it can cause a problem of getting u2 data. 
   7. Backup files
   8. Insecure configuration
   9.  Version control history
