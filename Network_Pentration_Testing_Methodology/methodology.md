@@ -1,0 +1,8 @@
+![Recon](Recon.png)
+![Scan_And_Enum](Scan_And_Enum.png)
+![Gain_Access](Gain_Access.png)
+![Maintain_Access](Maintain_Access.png)
+![Privilage_Escalation](Privilage_Escalation.png)
+![Cover_Tracks](Cover_Tracks.png)
+![Report_And_Doc](Report_And_Doc.png)
+![Key_Principles](Key_Principles.png)
