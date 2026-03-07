@@ -1,0 +1,14 @@
+# Username enumeration via response timing - Solution
+- First we need to spoof the IP address to be able to send multiple requests without block. 
+- So we need to add to the headder X-Forwarded-For header which allows us to change the IP address of the sender, and bypass the IP blockker. 
+- Then we need to capture the packet and sent it to the repeater. 
+- Enter the username and password incorrectly, and notice that the time response is very fast. 
+- then enter the username correctly but password incorrectly, and you will notice that the response is delayed based on the password length. 
+- So send the request to the intruder. 
+- select Pitchfork attack. 
+- add the X-Forwarded-For and make it numbers and increase it from 1 to 100
+- add the username and add its corresponding username wordlist. 
+- add very long password to be able to diffrentiate the responses based on time. 
+- start the attack. 
+- the valid username is the one with the longest response time. 
+- then use same technique to get the best password but based on the length not on the response time. 

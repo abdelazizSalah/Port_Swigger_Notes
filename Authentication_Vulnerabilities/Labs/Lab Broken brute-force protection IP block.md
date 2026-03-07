@@ -1,0 +1,12 @@
+# Lab: Broken brute-force protection, IP block - Solution
+- We can notice that if we entered the username and password wrong for 3 consecutive times we will have a IP block. 
+- but we can reset this block if we entered correct credentials. 
+- So what we can do is that we can create a usernameWordlist.txt where we have correct username: wiener then followed by the victim name: carlos 2 times, then we repeat the same pattern for 100 times. 
+  - wiener, carlos, carlos (counter = 1)
+  - wiener, carlos, carlos (counter = 2)
+  - ...
+  - wiener, carlos, carlos (counter = 100)
+- Then we create a passwordWordListFile.txt where indicies corresponding to wiener should be its correct password *peter*, and we add the given passwords to the remaining indicies. 
+- then we run Pitchfork attack, and we can get the username and password: 
+  - carlos
+  - iloveyou
