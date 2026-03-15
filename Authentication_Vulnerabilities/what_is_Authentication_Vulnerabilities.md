@@ -31,6 +31,12 @@
 3. Verbose error message
    - The application outputs a verbose error message that allows for username or password enumeration
      - ![Verbose_errors](Verbose_errors.png) 
+   - We should also check if there is a difference in the error messages, for example: 
+     - for valid username we get: 
+       - Incorrect username or password
+     - for invalid username we get:
+       - Incorrect username or password. <- notice the dot 
+       
 4. Vulnerable transmission of credentials
    - Like when the application uses unencrypted HTTP connection to transmit login credentials
      - ![vulnerable_transmission](vulnerable_transmission.png)  
