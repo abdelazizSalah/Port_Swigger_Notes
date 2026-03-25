@@ -1,0 +1,9 @@
+- signup to the newsletter with any email. 
+- You will get another copoun SIGNUP30
+- Add the jacket to the cart
+- Add the SIGNUP30
+- Then add NEWCUST5
+- Then SIGNUP30
+- then NEWCUST5
+- and repeat until you have amount less than 100, and then buy the jacket
+- ![alt text](image.png)
